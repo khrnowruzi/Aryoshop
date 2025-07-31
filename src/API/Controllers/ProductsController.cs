@@ -1,15 +1,20 @@
-using System.Threading.Tasks;
 using Application.DTOs.Products;
 using Application.Extensions.Products;
 using Application.Interfaces;
-using Application.Interfaces.Products;
+using Application.Specification.Products;
+using Core.Entities.Products;
+using Core.Interfaces;
+using Infrastructure.Repositories.Products;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController(IProductRepository repo, ISlugService slugService) : ControllerBase
+    public class ProductsController(
+        IGenericRepository<Product, Guid> repo,
+        ISlugService slugService
+        ) : ControllerBase
     {
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<ProductDto>>> GetProducts(
@@ -18,7 +23,9 @@ namespace API.Controllers
             string? sort
             )
         {
-            var products = await repo.GetProductsAsync(brand, model, sort);
+            var spec = new ProductSpecification(brand, model, sort);
+
+            var products = await repo.GetAllWithSpecificationAsync(spec);
 
             return products.Select(p => p.ToDto()).ToList();
         }
@@ -26,7 +33,7 @@ namespace API.Controllers
         [HttpGet("{id:Guid}")]
         public async Task<ActionResult<ProductDto>> GetProduct(Guid id)
         {
-            var product = await repo.GetProductByIdAsync(id);
+            var product = await repo.GetByIdAsync(id);
 
             if (product == null) return NotFound();
 
@@ -44,9 +51,9 @@ namespace API.Controllers
             product.Slug = slugService.GenerateSlug(
                 string.Join(' ', [product.Name, product.Brand, product.Model]));
 
-            repo.AddProduct(product);
+            repo.Add(product);
 
-            if (await repo.SaveChangeAsync())
+            if (await repo.SaveAllAsync())
             {
                 return CreatedAtAction("GetProduct", new { id = product.Id }, product);
             }
@@ -60,7 +67,7 @@ namespace API.Controllers
             if (productDto.Id != id)
                 return BadRequest("Cannot update this product");
 
-            var product = await repo.GetProductByIdAsync(id);
+            var product = await repo.GetByIdAsync(id);
             if (product is null)
                 return NotFound();
 
@@ -70,9 +77,9 @@ namespace API.Controllers
             product.Slug = slugService.GenerateSlug(
                 string.Join(' ', [product.Name, product.Brand, product.Model]));
 
-            repo.UpdateProduct(product);
+            repo.Update(product);
 
-            if (await repo.SaveChangeAsync())
+            if (await repo.SaveAllAsync())
             {
                 return NoContent();
             }
@@ -83,7 +90,7 @@ namespace API.Controllers
         [HttpDelete("{id:Guid}")]
         public async Task<ActionResult> DeleteProduct(Guid id)
         {
-            var product = await repo.GetProductByIdAsync(id);
+            var product = await repo.GetByIdAsync(id);
 
             if (product is null) return NotFound();
 
@@ -91,9 +98,9 @@ namespace API.Controllers
             product.UpdatedDate = DateTime.UtcNow;
             product.UpdatedBy = "admin";
 
-            repo.UpdateProduct(product);
+            repo.Update(product);
 
-            if (await repo.SaveChangeAsync())
+            if (await repo.SaveAllAsync())
             {
                 return NoContent();
             }
@@ -104,13 +111,17 @@ namespace API.Controllers
         [HttpGet("brands")]
         public async Task<ActionResult<IReadOnlyList<string>>> GetBrands()
         {
-            return Ok(await repo.GetBrandsAsync());
+            var spec = new BrandsSpecification();
+
+            return Ok(await repo.GetAllWithSpecificationAsync(spec));
         }
 
         [HttpGet("models")]
         public async Task<ActionResult<IReadOnlyList<string>>> GetModels()
         {
-            return Ok(await repo.GetModelsAsync());
+            var spec = new ModelsSpecification();
+
+            return Ok(await repo.GetAllWithSpecificationAsync(spec));
         }
     }
 }

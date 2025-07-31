@@ -1,7 +1,9 @@
 using Application.Interfaces;
-using Application.Interfaces.Products;
 using Application.Services;
+using Core.Interfaces;
+using Core.Interfaces.Products;
 using Infrastructure.Data;
+using Infrastructure.Repositories;
 using Infrastructure.Repositories.Products;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +21,8 @@ builder.Services.AddDbContext<StoreContext>(opt =>
 builder.Services.AddSingleton<ISlugService, SlugService>();
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+builder.Services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
 
 var app = builder.Build();
 
