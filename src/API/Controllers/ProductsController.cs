@@ -4,7 +4,6 @@ using Application.Interfaces;
 using Application.Specification.Products;
 using Core.Entities.Products;
 using Core.Interfaces;
-using Infrastructure.Repositories.Products;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

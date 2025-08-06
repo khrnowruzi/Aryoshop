@@ -1,9 +1,9 @@
 using Application.Specification.Base;
 using Core.Entities.Products;
 
-namespace Infrastructure.Repositories.Products;
+namespace Application.Specification.Products;
 
-public class BrandsSpecification : Specification<Product, string>
+public class BrandsSpecification : BaseSpecification<Product, string>
 {
     public BrandsSpecification() : base(null)
     {

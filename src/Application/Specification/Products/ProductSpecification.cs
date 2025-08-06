@@ -3,7 +3,7 @@ using Core.Entities.Products;
 
 namespace Application.Specification.Products;
 
-public class ProductSpecification : Specification<Product>
+public class ProductSpecification : BaseSpecification<Product>
 {
     public ProductSpecification(string? brand, string? model, string? sort) : base(x =>
         (string.IsNullOrWhiteSpace(brand) || x.Brand == brand) &&
