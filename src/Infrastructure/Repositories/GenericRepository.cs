@@ -17,6 +17,15 @@ public class GenericRepository<TEntity, TKey>(StoreContext context) : IGenericRe
         _dbSet.Add(entity);
     }
 
+    public async Task<int> CountAsync(ISpecification<TEntity> spec)
+    {
+        var query = _dbSet.AsQueryable();
+
+        query = spec.ApplyCriteria(query);
+
+        return await query.CountAsync();
+    }
+
     public void Delete(TEntity entity)
     {
         _dbSet.Remove(entity);

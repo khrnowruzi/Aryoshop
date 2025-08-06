@@ -1,6 +1,7 @@
 using Application.DTOs.Products;
 using Application.Extensions.Products;
 using Application.Interfaces;
+using Application.RequestHelpers;
 using Application.Specification.Products;
 using Core.Entities.Products;
 using Core.Interfaces;
@@ -10,23 +11,24 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController(
-        IGenericRepository<Product, Guid> repo,
-        ISlugService slugService
-        ) : ControllerBase
+    public class ProductsController(IGenericRepository<Product, Guid> repo, ISlugService slugService) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProductDto>>> GetProducts(
-            string? brand,
-            string? model,
-            string? sort
-            )
+        public async Task<ActionResult<IReadOnlyList<ProductDto>>> GetProducts([FromQuery] ProductSpecParams specParams)
         {
-            var spec = new ProductSpecification(brand, model, sort);
+            var spec = new ProductSpecification(specParams);
 
             var products = await repo.GetAllWithSpecificationAsync(spec);
+            var count = await repo.CountAsync(spec);
 
-            return products.Select(p => p.ToDto()).ToList();
+            var pagination = new Pagination<ProductDto>(
+                specParams.PageIndex,
+                specParams.PageSize,
+                count,
+                [.. products.Select(p => p.ToDto())]
+            );
+
+            return Ok(pagination);
         }
 
         [HttpGet("{id:Guid}")]
