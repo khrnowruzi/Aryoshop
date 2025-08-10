@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Core.Entities.Base;
+namespace Domain.Entities.Base;
 
 /// <summary>
 /// Interface for entities with a primary key.

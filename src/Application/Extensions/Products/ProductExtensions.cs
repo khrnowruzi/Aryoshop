@@ -1,5 +1,5 @@
 using Application.DTOs.Products;
-using Core.Entities.Products;
+using Domain.Entities.Products;
 
 namespace Application.Extensions.Products;
 

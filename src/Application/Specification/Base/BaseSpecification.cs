@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using Core.Interfaces;
+using Domain.Interfaces;
 
 namespace Application.Specification.Base;
 

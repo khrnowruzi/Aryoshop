@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-namespace Core.Interfaces;
+namespace Domain.Interfaces;
 
 public interface ISpecification<TEntity>
 {

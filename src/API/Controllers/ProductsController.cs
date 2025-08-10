@@ -1,10 +1,9 @@
 using Application.DTOs.Products;
 using Application.Extensions.Products;
-using Application.Interfaces;
 using Application.RequestHelpers;
 using Application.Specification.Products;
-using Core.Entities.Products;
-using Core.Interfaces;
+using Domain.Entities.Products;
+using Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

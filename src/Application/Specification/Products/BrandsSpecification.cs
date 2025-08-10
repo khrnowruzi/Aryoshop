@@ -1,5 +1,5 @@
 using Application.Specification.Base;
-using Core.Entities.Products;
+using Domain.Entities.Products;
 
 namespace Application.Specification.Products;
 

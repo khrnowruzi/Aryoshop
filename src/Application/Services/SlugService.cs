@@ -1,4 +1,4 @@
-using Application.Interfaces;
+using Domain.Interfaces;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;

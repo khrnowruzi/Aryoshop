@@ -1,6 +1,6 @@
 using System.Reflection;
-using Core.Entities.Base;
-using Core.Entities.Products;
+using Domain.Entities.Base;
+using Domain.Entities.Products;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data;

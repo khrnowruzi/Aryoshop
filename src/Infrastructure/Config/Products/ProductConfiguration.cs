@@ -1,4 +1,4 @@
-using Core.Entities.Products;
+using Domain.Entities.Products;
 using Infrastructure.Config.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

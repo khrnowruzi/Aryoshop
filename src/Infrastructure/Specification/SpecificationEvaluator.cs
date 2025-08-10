@@ -1,5 +1,5 @@
-using Core.Entities.Base;
-using Core.Interfaces;
+using Domain.Entities.Base;
+using Domain.Interfaces;
 
 namespace Infrastructure.Specification;
 

@@ -1,6 +1,6 @@
-using Core.Entities.Base;
+using Domain.Entities.Base;
 
-namespace Core.Interfaces;
+namespace Domain.Interfaces;
 
 public interface IGenericRepository<TEntity, TKey> where TEntity : BaseEntity<TKey>
 {

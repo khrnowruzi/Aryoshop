@@ -1,6 +1,6 @@
-using Core.Entities.Base;
+using Domain.Entities.Base;
 
-namespace Core.Entities.Products;
+namespace Domain.Entities.Products;
 
 public class Product : AuditableEntity<Guid>
 {

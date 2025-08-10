@@ -1,8 +1,7 @@
 using API.Middleware;
-using Application.Interfaces;
 using Application.Services;
-using Core.Interfaces;
-using Core.Interfaces.Products;
+using Domain.Interfaces;
+using Domain.Interfaces.Products;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Infrastructure.Repositories.Products;

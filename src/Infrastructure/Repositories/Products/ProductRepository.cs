@@ -1,5 +1,5 @@
-using Core.Entities.Products;
-using Core.Interfaces.Products;
+using Domain.Entities.Products;
+using Domain.Interfaces.Products;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 

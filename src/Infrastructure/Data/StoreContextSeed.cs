@@ -1,7 +1,7 @@
 using System.Text.Json;
 using Application.DTOs.Products;
 using Application.Extensions.Products;
-using Application.Interfaces;
+using Domain.Interfaces;
 
 namespace Infrastructure.Data;
 
