@@ -1,3 +1,43 @@
+@use '@angular/material' as mat;
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+$customTheme: mat.define-theme();
+
+@include mat.core();
+
+.custom-theme {
+    @include mat.all-component-themes($customTheme);
+
+    //override the button styles
+    .mdc-button,
+    .mdc-raised-button,
+    .mdc-stroked-button,
+    .mdc-flat-button {
+        @apply rounded-md;
+    }
+
+    @media not all and (min-width: 550px) {
+        .mat-mdc-paginator-page-size {
+            display: none;
+        }
+    }
+}
+
+.container {
+    @apply mx-auto max-w-full;
+}
+
+.text-primary {
+    color: #7d00fa;
+}
+
+button.match-input-height {
+    height: var(--mat-form-field-container-height) !important;
+}
+
+.mdc-notched-outline__notch {
+    border-right-style: none !important
+}
