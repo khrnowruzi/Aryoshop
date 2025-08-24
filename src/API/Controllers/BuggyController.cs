@@ -10,19 +10,19 @@ namespace API.Controllers
         [HttpGet("unauthorized")]
         public IActionResult GetUnAuthorized()
         {
-            return Unauthorized();
+            return Unauthorized();  //Status401Unauthorized
         }
 
         [HttpGet("badrequest")]
         public IActionResult GetBadRequest()
         {
-            return BadRequest("Not a good request");
+            return BadRequest("Not a good request");    //Status400BadRequest
         }
 
         [HttpGet("notfound")]
         public IActionResult GetNotFound()
         {
-            return NotFound();
+            return NotFound();  //Status404NotFound
         }
 
         [HttpGet("internalerror")]
@@ -34,7 +34,7 @@ namespace API.Controllers
         [HttpPost("validationerror")]
         public IActionResult GetValidationError(ProductDto produtDto)
         {
-            return Ok();
+            return Ok();    //Status400BadRequest, response with validation errors
         }
     }
 }

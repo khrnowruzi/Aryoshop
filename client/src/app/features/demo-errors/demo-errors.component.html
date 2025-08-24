@@ -1,0 +1,17 @@
+<section class="grid sm:grid-cols-2 max-sm:grid-cols-1 lg:flex lg:justify-center gap-3 mt-8">
+    <button mat-flat-button (click)="get400Error()">Test 400 error</button>
+    <button mat-flat-button (click)="get401Error()">Test 401 error</button>
+    <button mat-flat-button (click)="get404Error()">Test 404 error</button>
+    <button mat-flat-button (click)="get400VlidationError()">Test 400 validation error</button>
+    <button mat-flat-button (click)="get500Error()">Test 500 error</button>
+</section>
+
+@if (validationErrors) {
+<div class="mx-auto max-w-lg mt-10 bg-red-100">
+    <ul class="space-y-2 p-2">
+        @for (error of validationErrors; track $index) {
+        <li class="text-red-800">{{error}}</li>
+        }
+    </ul>
+</div>
+}
