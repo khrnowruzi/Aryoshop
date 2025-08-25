@@ -21,7 +21,7 @@ namespace API.Controllers
         {
             var updatedCart = await cartService.SetCartAsync(cart);
 
-            return updatedCart == null ? BadRequest("Problem with cart") : updatedCart;
+            return Ok(updatedCart == null ? BadRequest("Problem with cart") : updatedCart);
         }
 
         [HttpDelete]

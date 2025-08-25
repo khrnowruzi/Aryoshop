@@ -15,7 +15,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<StoreContext>(opt =>
 {
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+        ?? throw new Exception("Cannot get default connection string");
+
+    opt.UseSqlServer(connectionString);
 });
 builder.Services.AddSingleton<ISlugService, SlugService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -24,7 +27,7 @@ builder.Services.AddCors();
 builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
 {
     var connectionString = builder.Configuration.GetConnectionString("Redis")
-        ?? throw new Exception("Cannot redis connection string");
+        ?? throw new Exception("Cannot get redis connection string");
     var configuration = ConfigurationOptions.Parse(connectionString, true);
     return ConnectionMultiplexer.Connect(configuration);
 }
