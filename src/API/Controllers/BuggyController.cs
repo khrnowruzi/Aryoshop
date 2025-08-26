@@ -1,4 +1,6 @@
+using System.Security.Claims;
 using Application.DTOs.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -35,6 +37,16 @@ namespace API.Controllers
         public IActionResult GetValidationError(ProductDto produtDto)
         {
             return Ok();    //Status400BadRequest, response with validation errors
+        }
+
+        [Authorize]
+        [HttpGet("secretinfo")]
+        public IActionResult GetSecretInfo()
+        {
+            var name = User.FindFirst(ClaimTypes.Name)?.Value;
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            return Ok("User name is " + name + " and user id is " + userId);
         }
     }
 }
